@@ -3,25 +3,26 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : MonoBehaviour {
-    [SerializeField] private float speed;
-    [SerializeField] private float turnRate;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    private float turnRate;
     private Vector3 velocity;
     private Vector3 rotation;
     private Rigidbody rb;
 
-    private void Awake() {
+    private void Awake()
+    {
         rb = GetComponent<Rigidbody>();
     }
-
-    private void Update() {
-
-    }
-
-    private void FixedUpdate() {
+    
+    private void FixedUpdate()
+    {
         Move();
     }
 
-    private void Move() {
+    private void Move()
+    {
 
         velocity.x = speed * Input.GetAxisRaw("Horizontal");
         velocity.z = speed * Input.GetAxisRaw("Vertical");
