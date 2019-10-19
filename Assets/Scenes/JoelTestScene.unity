@@ -155,7 +155,6 @@ MonoBehaviour:
   waveInterval: 20
   levels:
   - {fileID: 2952876164691893887, guid: 78036202328376247986b8d3a91dd07f, type: 3}
-  - {fileID: 4208497381347313769, guid: 5c7c7ed4e85c47740bfad58a116071c0, type: 3}
   levelData:
     waves:
     - {fileID: 11400000, guid: 5c7e79b2ec6aaf546b04454a84931196, type: 2}

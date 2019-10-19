@@ -22,6 +22,9 @@ public class AISpawnSystem : MonoBehaviour {
     public void StartLevel() {
         rooms = Instantiate(levels[Random.Range(0, levels.Length)]).GetComponentsInChildren<Room>();
         int roomNo = Random.Range(0, rooms.Length);
+        while (rooms[roomNo].SpawnPoints.Length == 0) {
+            roomNo = Random.Range(0, rooms.Length);
+        }
         levelData.SetTarget(Instantiate(player, rooms[roomNo].SpawnPoints[Random.Range(0, rooms[roomNo].SpawnPoints.Length)], Quaternion.identity).transform);
 
         waveCoroutine = StartCoroutine(StartWave());
@@ -59,6 +62,9 @@ public class AISpawnSystem : MonoBehaviour {
         while (currentSpawn < spawn.count) {
             AI ai = aiPoolSystem.GetAIPool(spawn.ai);
             roomNo = Random.Range(0, rooms.Length);
+            while (rooms[roomNo].SpawnPoints.Length == 0) {
+                roomNo = Random.Range(0, rooms.Length);
+            }
             randomPos = rooms[roomNo].SpawnPoints[Random.Range(0, rooms[roomNo].SpawnPoints.Length)];
             ai.Spawn(randomPos, levelData.Target);
             ai.gameObject.SetActive(true);
