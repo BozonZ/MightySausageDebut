@@ -36,7 +36,6 @@ public class AIPoolSystem : MonoBehaviour {
             IncreasePool(poolID, incrementAmount);
 
         AI ai = poolList[poolID].Dequeue();
-        ai.gameObject.SetActive(true);
         //Debug.Log("Retrieved " + ai.name + " from pool.");
         return ai;
     }

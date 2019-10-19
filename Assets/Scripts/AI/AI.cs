@@ -7,7 +7,7 @@ public class AI : MonoBehaviour, IDamageable
     [SerializeField] protected AIData data = null;
     public AIData GetData => data;
     protected NavMeshAgent agent;
-    protected Transform target;
+    public Transform target;
     protected float health;
 
     public Action OnDeathEvent;
@@ -32,10 +32,10 @@ public class AI : MonoBehaviour, IDamageable
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
         this.target = target;
-        agent.SetDestination(target.position);
+        //agent.SetDestination(target.position);
     }
 
-    public void Attack() {
+    public void Update() {
         if (target == null)
             return;
 

@@ -1,47 +1,31 @@
-﻿using System;
+﻿#pragma warning disable CS0649
 using System.Collections;
 using UnityEngine;
 
-public class AISpawnSystem : MonoBehaviour
-{
+public class AISpawnSystem : MonoBehaviour {
+    [SerializeField] private CharacterMovement player;
     [SerializeField] private AIPoolSystem aiPoolSystem = null;
+    [SerializeField] private GameObject[] levels;
     [SerializeField] private AILevelData levelData = new AILevelData();
     public AILevelData GetLevelData => levelData;
-    private int waveNo = 0;
-    private int currAI;
-
-    public Vector3 SpawnPoint {
-        get {
-            Vector3 p;
-            p.x = UnityEngine.Random.Range(-0.5f, 0.5f);
-            p.y = 0f;
-            p.z = UnityEngine.Random.Range(-0.5f, 0.5f);
-            return transform.TransformPoint(p);
-        }
-    }
+    private Room[] rooms;
 
     private void Start() {
         if (aiPoolSystem == null)
             aiPoolSystem = GetComponent<AIPoolSystem>();
 
-        SetupLevel();
+        StartLevel();
+    }
+
+    public void StartLevel() {
+        rooms = Instantiate(levels[Random.Range(0, levels.Length)]).GetComponentsInChildren<Room>();
+        int roomNo = Random.Range(0, rooms.Length);
+        levelData.target = Instantiate(player, rooms[roomNo].SpawnPoints[Random.Range(0, rooms[roomNo].SpawnPoints.Length)], Quaternion.identity).transform;
         StartWave();
     }
 
-    private void CheckCount() {
-        currAI--;
-        if(currAI < 5) {
-            StartWave();
-        }
-    }
-
-    public void SetupLevel() {
-        waveNo = -1;
-    }
-
     public void StartWave() {
-        waveNo++;
-        AIBatch[] batches = levelData.waves[waveNo].aiBatches;
+        AIBatch[] batches = levelData.waves[Random.Range(0, levelData.waves.Length)].aiBatches;
         for (int i = 0; i < batches.Length; i++) {
             StartCoroutine(SpawnBatch(batches[i]));
         }
@@ -51,7 +35,7 @@ public class AISpawnSystem : MonoBehaviour
         yield return new WaitForSeconds(batch.delay);
         //Debug.Log(batch.name + " has started!");
         AISpawn[] spawns = batch.aiSpawns;
-        for(int i = 0; i < spawns.Length; i++) {
+        for (int i = 0; i < spawns.Length; i++) {
             StartCoroutine(SpawnAI(spawns[i]));
         }
     }
@@ -63,13 +47,16 @@ public class AISpawnSystem : MonoBehaviour
 
     private IEnumerator SpawnInterval(AISpawn spawn) {
         int currentSpawn = 0;
+        int roomNo = 0;
+        Vector3 randomPos;
         while (currentSpawn < spawn.count) {
             AI ai = aiPoolSystem.GetAIPool(spawn.ai);
-            ai.OnDeathEvent = CheckCount;
-            ai.Spawn(SpawnPoint, levelData.target);
-            //Debug.Log(ai.name + " has spawned!");
-            currAI++;
+            roomNo = Random.Range(0, rooms.Length);
+            randomPos = rooms[roomNo].SpawnPoints[Random.Range(0, rooms[roomNo].SpawnPoints.Length)];
+            ai.Spawn(randomPos, levelData.target);
+            ai.gameObject.SetActive(true);
             currentSpawn++;
+            //Debug.Log(ai.name + " has spawned!");
             yield return new WaitForSeconds(spawn.interval);
         }
     }
