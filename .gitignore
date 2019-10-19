@@ -61,3 +61,61 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+Assets/Resources.meta
+Assets/Resources/AI.meta
+Assets/Resources/AI/AIBatch 1.asset
+Assets/Resources/AI/AIBatch 1.asset.meta
+Assets/Resources/AI/AIBatch 2.asset
+Assets/Resources/AI/AIBatch 2.asset.meta
+Assets/Resources/AI/AIBatch.asset
+Assets/Resources/AI/AIBatch.asset.meta
+Assets/Resources/AI/AIType.asset
+Assets/Resources/AI/AIType.asset.meta
+Assets/Resources/AI/AIWave 1.asset
+Assets/Resources/AI/AIWave 1.asset.meta
+Assets/Resources/AI/AIWave 2.asset
+Assets/Resources/AI/AIWave 2.asset.meta
+Assets/Resources/AI/AIWave 3.asset
+Assets/Resources/AI/AIWave 3.asset.meta
+Assets/Resources/AI/AIWave.asset
+Assets/Resources/AI/AIWave.asset.meta
+Assets/Resources/AI/ArmoredAI.asset
+Assets/Resources/AI/ArmoredAI.asset.meta
+Assets/Resources/AI/NormalAI.asset
+Assets/Resources/AI/NormalAI.asset.meta
+Assets/Scenes.meta
+Assets/Scenes/JoelTestScene.meta
+Assets/Scenes/JoelTestScene.unity
+Assets/Scenes/JoelTestScene.unity.meta
+Assets/Scenes/JoelTestScene/NavMesh.asset
+Assets/Scenes/JoelTestScene/NavMesh.asset.meta
+Assets/Scripts.meta
+Assets/Scripts/AI.meta
+Assets/Scripts/AI/AI.cs
+Assets/Scripts/AI/AI.cs.meta
+Assets/Scripts/AI/AIBatch.cs
+Assets/Scripts/AI/AIBatch.cs.meta
+Assets/Scripts/AI/AIData.cs
+Assets/Scripts/AI/AIData.cs.meta
+Assets/Scripts/AI/AIPoolSystem.cs
+Assets/Scripts/AI/AIPoolSystem.cs.meta
+Assets/Scripts/AI/AISpawnSystem.cs
+Assets/Scripts/AI/AISpawnSystem.cs.meta
+Assets/Scripts/AI/AIType.cs
+Assets/Scripts/AI/AIType.cs.meta
+Assets/Scripts/AI/AITypeAttribute.cs
+Assets/Scripts/AI/AITypeAttribute.cs.meta
+Assets/Scripts/AI/EnemyA.prefab
+Assets/Scripts/AI/EnemyA.prefab.meta
+Assets/Scripts/AI/EnemyB.prefab
+Assets/Scripts/AI/EnemyB.prefab.meta
+Assets/Scripts/AI/Wave.cs
+Assets/Scripts/AI/Wave.cs.meta
+Assets/Scripts/FireSprinkler.cs
+Assets/Scripts/FireSprinkler.cs.meta
+Assets/Scripts/IDamageable.cs
+Assets/Scripts/IDamageable.cs.meta
+Assets/Scripts/Receiver.cs
+Assets/Scripts/Receiver.cs.meta
+Assets/Scripts/Trigger.cs
+Assets/Scripts/Trigger.cs.meta
