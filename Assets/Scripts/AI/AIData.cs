@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#pragma warning disable CS0649
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "AI", menuName = "AI/Create new AI", order = 1)]
 public class AIData : ScriptableObject
@@ -22,8 +23,12 @@ public class AIData : ScriptableObject
 
 [System.Serializable]
 public struct AILevelData {
-    public Transform target;
+    private Transform target;
     public Wave[] waves;
+    public Transform Target => target;
+    public void SetTarget(Transform target) {
+        this.target = target;
+    }
 }
 
 [System.Serializable]
