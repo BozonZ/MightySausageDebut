@@ -40,7 +40,7 @@ public class AITypeAttribute : PropertyAttribute {
             names = new string[aiType.ais.Length];
             indices = new int[aiType.ais.Length];
             for (int i = 0; i < aiType.ais.Length; i++) {
-                names[i] = aiType.ais[i].GetData.name;
+                names[i] = aiType.ais[i].GetData.Name;
                 indices[i] = i;
             }
         }

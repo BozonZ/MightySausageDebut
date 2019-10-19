@@ -3,12 +3,21 @@
 [CreateAssetMenu(fileName = "AI", menuName = "AI/Create new AI", order = 1)]
 public class AIData : ScriptableObject
 {
-    public new string name;
-    public int health;
-    public float armor;
-    public float acceleration;
-    public float moveSpeed;
-    public float rotateSpeed;
+    [SerializeField] private new string name;
+    [SerializeField] private float health;
+    [SerializeField] private float damage;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float rotateSpeed;
+    [SerializeField] private float range;
+
+    public string Name => name;
+    public float Health => health;
+    public float Damage => damage;
+    public float Acceleration => acceleration;
+    public float MoveSpeed => moveSpeed;
+    public float RotateSpeed => rotateSpeed;
+    public float Range => range;
 }
 
 [System.Serializable]

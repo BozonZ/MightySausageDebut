@@ -44,7 +44,7 @@ public class AIPoolSystem : MonoBehaviour {
     public void ReturnToPool(AI ai) {
 
         for (int i = 0; i < this.ai.ais.Length; i++) {
-            if (ai.GetData.name == this.ai.ais[i].GetData.name) {
+            if (ai.GetData.Name == this.ai.ais[i].GetData.Name) {
                 ai.gameObject.SetActive(false);
                 poolList[i].Enqueue(ai);
                 return;

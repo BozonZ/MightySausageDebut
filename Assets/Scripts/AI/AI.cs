@@ -4,27 +4,23 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour, IDamageable
 {
-    [SerializeField] private AIData data = null;
+    [SerializeField] protected AIData data = null;
     public AIData GetData => data;
-    private NavMeshAgent agent;
-    public event Action<AI> ReturnToPoolEvent;
+    protected NavMeshAgent agent;
+    protected Transform target;
+    protected float health;
+
     public Action OnDeathEvent;
-    private Transform target;
-    private int health;
+    public event Action<AI> ReturnToPoolEvent;
 
     private void Start() {
         data = Instantiate(data);
         agent = GetComponent<NavMeshAgent>();
-        agent.acceleration = data.acceleration;
-        agent.speed = data.moveSpeed;
-        agent.angularSpeed = data.rotateSpeed;
-        health = data.health;
-    }
-
-    private void Update() {
-        if (target == null)
-            return;
-        agent.SetDestination(target.position);
+        agent.acceleration = data.Acceleration;
+        agent.speed = data.MoveSpeed;
+        agent.angularSpeed = data.RotateSpeed;
+        agent.stoppingDistance = data.Range;
+        health = data.Health;
     }
 
     public void Spawn(Vector3 start, Transform target) {
@@ -39,19 +35,30 @@ public class AI : MonoBehaviour, IDamageable
         agent.SetDestination(target.position);
     }
 
+    public void Attack() {
+        if (target == null)
+            return;
+
+        agent.SetDestination(target.position);
+    }
+
     public void OnDamaged() {
-        health--;
+        health -= Time.deltaTime;
         if(health <= 0)
             OnDeath();
     }
 
     public void OnDeath() {
         target = null;
-        health = data.health;
+        health = data.Health;
         OnDeathEvent?.Invoke();
         if (ReturnToPoolEvent == null)
             Debug.LogWarning("No methods attached to returntopoolEvent!");
         else
             ReturnToPoolEvent.Invoke(this);
+    }
+
+    private enum AIState {
+        Attack
     }
 }
