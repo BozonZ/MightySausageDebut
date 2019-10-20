@@ -4,6 +4,7 @@ using UnityEngine;
 using JoelQ.Helper;
 
 public class CharacterAttack : MonoBehaviour {
+    [SerializeField] private Animator animator;
     [SerializeField] private Vector3 laserOffset;
     [SerializeField] private Vector3 laserSize;
     [SerializeField] private float attackRange;
@@ -42,6 +43,9 @@ public class CharacterAttack : MonoBehaviour {
         if (!Physics.Raycast(transform.position + laserOffset, transform.forward, out sight, attackRange, ~attackMask)) {
             RaycastHit[] hits;
             hits = Physics.BoxCastAll(transform.position + laserOffset, laserSize / 2, transform.forward, Quaternion.identity, attackRange, attackMask);
+            if(hits.Length != 0) {
+                animator.SetTrigger("Attack");
+            }
             foreach (RaycastHit hit in hits) {
                 IDamageable iDamage = hit.collider.GetComponent<IDamageable>();
                 iDamage?.OnDeath();

@@ -94,6 +94,7 @@ public class AI : MonoBehaviour, IDamageable {
             RaycastHit hit;
             if (!Physics.Raycast(transform.position + attackOffset, transform.forward, out hit, data.Range, sightMask)) {
                 if (Physics.BoxCast(transform.position + attackOffset, attackSize, transform.forward, out hit, Quaternion.identity, data.Range, attackMask)) {
+                    Debug.Log("Attack");
                     lineRenderer.SetPosition(0, transform.position + attackOffset);
                     lineRenderer.SetPosition(1, hit.point);
                     if (!source.isPlaying) {

@@ -3,6 +3,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : MonoBehaviour, IDamageable {
+    [SerializeField] private Animator animator;
+    [SerializeField] private float toIdle;
     [SerializeField] private float maxHealth;
     [SerializeField] private float speed;
     [SerializeField] private float turnRate;
@@ -12,6 +14,8 @@ public class CharacterMovement : MonoBehaviour, IDamageable {
     private Rigidbody rb;
     private AudioSource audioSource;
     private float health;
+    private float tempIdle;
+    private bool isDeath;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -30,9 +34,19 @@ public class CharacterMovement : MonoBehaviour, IDamageable {
         //Sound
         if (Input.GetAxisRaw("Horizontal") != 0f || Input.GetAxisRaw("Vertical") != 0f) {
             if (!audioSource.isPlaying)
-                audioSource.PlayOneShot(walkAudios[Random.Range(0, walkAudios.Length)], 0.3f);
+                audioSource.PlayOneShot(walkAudios[Random.Range(0, walkAudios.Length)]);
+            animator.SetBool("Walk", true);
+            animator.SetBool("Idle", false);
+            tempIdle = toIdle;
+        } else {
+            animator.SetBool("Walk", false);
+            if (tempIdle > 0f) {
+                tempIdle -= Time.deltaTime;
+                if (tempIdle <= 0f) {
+                    animator.SetBool("Idle", true);
+                }
+            }
         }
-
         rb.velocity += velocity;
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
         rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(rotation, Vector3.up), turnRate * Time.deltaTime);
@@ -42,14 +56,21 @@ public class CharacterMovement : MonoBehaviour, IDamageable {
     }
 
     public void OnDamaged(float damage) {
+        if (isDeath)
+            return;
+
         health -= damage;
         Debug.Log($"{name} has {health} left");
+        animator.SetBool("Idle", false);
+        animator.SetTrigger("Damaged");
         if (health <= 0f) {
             OnDeath();
         }
     }
 
     public void OnDeath() {
+        isDeath = true;
+        animator.SetBool("Death", true);
         Debug.Log($"{name} is dead!");
     }
 
