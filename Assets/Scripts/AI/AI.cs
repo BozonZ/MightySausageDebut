@@ -1,18 +1,28 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI : MonoBehaviour, IDamageable
-{
+public class AI : MonoBehaviour, IDamageable {
     [SerializeField] protected AIData data = null;
     public AIData GetData => data;
     protected NavMeshAgent agent;
     public Transform target;
-    public GameObject stream;
     protected float health;
 
     public Action OnDeathEvent;
     public event Action<AI> ReturnToPoolEvent;
+    [SerializeField] private AudioClip[] attackAudios;
+    [SerializeField] private float attackRate;
+    [SerializeField] private LayerMask sightMask;
+    [SerializeField] private float attackFade;
+    [SerializeField] private Vector3 attackOffset;
+    [SerializeField] private Vector3 attackSize;
+    [SerializeField] private LayerMask attackMask;
+    private LineRenderer lineRenderer;
+    private Coroutine attackCoroutine;
+    private Coroutine attackFadeCoroutine;
+    private AudioSource source;
 
     private void Start() {
         data = Instantiate(data);
@@ -20,9 +30,14 @@ public class AI : MonoBehaviour, IDamageable
         agent.acceleration = data.Acceleration;
         agent.speed = data.MoveSpeed;
         agent.angularSpeed = data.RotateSpeed;
-        agent.stoppingDistance = 5;
+        agent.stoppingDistance = data.Range;
         health = data.Health;
-        stream.SetActive(false);
+
+        //Attack
+        lineRenderer = GetComponent<LineRenderer>();
+
+        //sound
+        source = GetComponent<AudioSource>();
     }
 
     public void Spawn(Vector3 start, Transform target) {
@@ -34,7 +49,6 @@ public class AI : MonoBehaviour, IDamageable
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
         this.target = target;
-        //agent.SetDestination(target.position);
     }
 
     public void Update() {
@@ -42,17 +56,21 @@ public class AI : MonoBehaviour, IDamageable
             return;
 
         agent.SetDestination(target.position);
-        agent.stoppingDistance = 5;
         Attack();
     }
 
-    public void OnDamaged() {
-        health -= Time.deltaTime;
-        if(health <= 0)
+    public void OnDamaged(float damage) {
+        health = 0f;
+        if (health <= 0f)
             OnDeath();
     }
 
     public void OnDeath() {
+        //Renderer
+        lineRenderer.enabled = false;
+        lineRenderer.material.SetColor("_Color", lineRenderer.startColor);
+        attackFadeCoroutine = null;
+
         target = null;
         health = data.Health;
         OnDeathEvent?.Invoke();
@@ -62,26 +80,61 @@ public class AI : MonoBehaviour, IDamageable
             ReturnToPoolEvent.Invoke(this);
     }
 
-    private enum AIState
-    {
-        Attack 
-    }
-
-    public void Attack()
-    {
+    public void Attack() {
         if (target == null)
             return;
 
         agent.transform.LookAt(new Vector3(target.position.x, transform.position.y, target.position.z));
-
-        if (agent.velocity.sqrMagnitude == 0f)
-        {
-            stream.SetActive(true);
-        }
-        else
-        {
-            stream.SetActive(false);
+        if (agent.velocity.sqrMagnitude == 0f && (agent.transform.position - target.position).magnitude < data.Range) {
+            if (attackFadeCoroutine != null) {
+                StopCoroutine(attackFadeCoroutine);
+            }
+            lineRenderer.enabled = true;
+            RaycastHit hit;
+            if (!Physics.Raycast(transform.position + attackOffset, transform.forward, out hit, data.Range, sightMask)) {
+                if (Physics.BoxCast(transform.position + attackOffset, attackSize, transform.forward, out hit, Quaternion.identity, data.Range, attackMask)) {
+                    lineRenderer.SetPosition(0, transform.position + attackOffset);
+                    lineRenderer.SetPosition(1, hit.point);
+                    if (!source.isPlaying) {
+                        source.PlayOneShot(attackAudios[UnityEngine.Random.Range(0, attackAudios.Length)], 0.5f);
+                    }
+                    if (attackCoroutine == null) {
+                        attackCoroutine = StartCoroutine(AttackCoroutine(hit.collider));
+                    }
+                }
+            }
+        } else {
+            if (attackFadeCoroutine == null)
+                attackFadeCoroutine = StartCoroutine(FadeAttack());
         }
     }
-    
+
+    private IEnumerator AttackCoroutine(Collider hit) {
+        hit.GetComponent<IDamageable>()?.OnDamaged(data.Damage);
+        yield return new WaitForSeconds(attackRate);
+        attackCoroutine = null;
+    }
+
+    private IEnumerator FadeAttack() {
+
+        float tempFade = 0f;
+        Color color = lineRenderer.startColor;
+        while (tempFade < attackFade) {
+            tempFade += Time.deltaTime;
+            color = Color.Lerp(color, new Color(0, 0f, 0f, 0f), Time.deltaTime / attackFade);
+            lineRenderer.material.SetColor("_Color", color);
+            yield return null;
+        }
+
+        lineRenderer.enabled = false;
+        color = lineRenderer.startColor;
+        lineRenderer.material.SetColor("_Color", color);
+        attackFadeCoroutine = null;
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + attackOffset, attackSize);
+    }
+
 }

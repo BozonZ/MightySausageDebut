@@ -17,7 +17,7 @@ MonoBehaviour:
     count: 5
     delay: 0
     interval: 0.5
-  - ai: 1
+  - ai: 0
     count: 8
     delay: 1
     interval: 0.5

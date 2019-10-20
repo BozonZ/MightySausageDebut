@@ -2,7 +2,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class CharacterMovement : MonoBehaviour {
+public class CharacterMovement : MonoBehaviour, IDamageable {
+    [SerializeField] private float maxHealth;
     [SerializeField] private float speed;
     [SerializeField] private float turnRate;
     [SerializeField] private AudioClip[] walkAudios;
@@ -10,10 +11,12 @@ public class CharacterMovement : MonoBehaviour {
     private Vector3 rotation;
     private Rigidbody rb;
     private AudioSource audioSource;
+    private float health;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        health = maxHealth;
     }
 
     private void FixedUpdate() {
@@ -36,6 +39,18 @@ public class CharacterMovement : MonoBehaviour {
         rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(rotation, Vector3.up), turnRate);
         rotation = velocity.magnitude > 0.01f || velocity.magnitude < -0.01f ? velocity : rotation;
         velocity = Vector3.zero;
-
     }
+
+    public void OnDamaged(float damage) {
+        health -= damage;
+        Debug.Log($"{name} has {health} left");
+        if (health <= 0f) {
+            OnDeath();
+        }
+    }
+
+    public void OnDeath() {
+        Debug.Log($"{name} is dead!");
+    }
+
 }
