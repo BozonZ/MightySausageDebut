@@ -8,6 +8,7 @@ public class AI : MonoBehaviour, IDamageable
     public AIData GetData => data;
     protected NavMeshAgent agent;
     public Transform target;
+    public GameObject stream;
     protected float health;
 
     public Action OnDeathEvent;
@@ -19,8 +20,9 @@ public class AI : MonoBehaviour, IDamageable
         agent.acceleration = data.Acceleration;
         agent.speed = data.MoveSpeed;
         agent.angularSpeed = data.RotateSpeed;
-        agent.stoppingDistance = data.Range;
+        agent.stoppingDistance = 5;
         health = data.Health;
+        stream.SetActive(false);
     }
 
     public void Spawn(Vector3 start, Transform target) {
@@ -40,6 +42,8 @@ public class AI : MonoBehaviour, IDamageable
             return;
 
         agent.SetDestination(target.position);
+        agent.stoppingDistance = 5;
+        Attack();
     }
 
     public void OnDamaged() {
@@ -58,7 +62,26 @@ public class AI : MonoBehaviour, IDamageable
             ReturnToPoolEvent.Invoke(this);
     }
 
-    private enum AIState {
-        Attack
+    private enum AIState
+    {
+        Attack 
     }
+
+    public void Attack()
+    {
+        if (target == null)
+            return;
+
+        agent.transform.LookAt(new Vector3(target.position.x, transform.position.y, target.position.z));
+
+        if (agent.velocity.sqrMagnitude == 0f)
+        {
+            stream.SetActive(true);
+        }
+        else
+        {
+            stream.SetActive(false);
+        }
+    }
+    
 }
