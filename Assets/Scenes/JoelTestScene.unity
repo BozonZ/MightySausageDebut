@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3899811799351463917, guid: 52c7e9118e2cf1046b019a072310b611, type: 3}
+  collectibles:
+  - {fileID: 6342190616333270224, guid: 26c5e1947630bae40b80309bf6da2a05, type: 3}
+  collectibleInterval: 5
   aiPoolSystem: {fileID: 770545337}
   waveInterval: 20
   levels:

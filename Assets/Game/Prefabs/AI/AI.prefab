@@ -51,7 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 071d4938a19cc4c49b13e587161996b4, type: 2}
   target: {fileID: 0}
-  damageAudio: {fileID: 8300000, guid: 2075c50d0ae3a9a408d421ff33a6c7c8, type: 3}
   attackAudios:
   - {fileID: 8300000, guid: 148bcb36194bf594eb86ac19a2e60e3f, type: 3}
   - {fileID: 8300000, guid: 103320b0f61b1ac47a17717c1d48fd56, type: 3}
@@ -376,6 +375,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: e76855c5e61af994ead8694cfc980eed,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d880cf5c2fdc9e408fde74ba1932fa7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e76855c5e61af994ead8694cfc980eed, type: 3}
 --- !u!4 &5847261143755929626 stripped

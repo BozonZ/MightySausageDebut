@@ -13,6 +13,7 @@ public class CharacterAttack : MonoBehaviour {
     [SerializeField] private AudioClip laserAudio;
     [SerializeField] private AudioClip[] absorbAudios;
     [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private ParticleSystem[] laserParticles;
     [SerializeField] private float fadeTime;
     private Coroutine attackCoroutine;
     private AudioSource audioSource;
@@ -56,6 +57,9 @@ public class CharacterAttack : MonoBehaviour {
     }
 
     private IEnumerator AttackRenderer(Vector3 startPos, Vector3 endPos) {
+        foreach(ParticleSystem particle in laserParticles) {
+            particle.gameObject.SetActive(true);
+        }
         lineRenderer.enabled = true;
         lineRenderer.SetPosition(0, startPos);
         lineRenderer.SetPosition(1, endPos);
@@ -63,14 +67,12 @@ public class CharacterAttack : MonoBehaviour {
         Color color = lineRenderer.startColor;
         while (tempFade < fadeTime) {
             tempFade += Time.deltaTime;
-            color = Color.Lerp(color, new Color(0f, 0f, 0f, 0f), Time.deltaTime / fadeTime);
-            lineRenderer.material.SetColor("_Color", color);
             yield return null;
         }
-
         lineRenderer.enabled = false;
-        color = lineRenderer.startColor;
-        lineRenderer.material.SetColor("_Color", color);
+        foreach (ParticleSystem particle in laserParticles) {
+            particle.gameObject.SetActive(false);
+        }
     }
 
     private void OnCollisionEnter(Collision other) {

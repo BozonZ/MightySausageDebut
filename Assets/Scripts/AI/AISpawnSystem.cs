@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AISpawnSystem : MonoBehaviour {
     [SerializeField] private CharacterMovement player;
+    [Header("Collectible")]
+    [SerializeField] private Collectible[] collectibles;
+    [SerializeField] private float collectibleInterval = 5f;
+    [Header("Level & Wave")]
     [SerializeField] private AIPoolSystem aiPoolSystem = null;
     [SerializeField] private float waveInterval;
     [SerializeField] private GameObject[] levels;
@@ -33,6 +37,7 @@ public class AISpawnSystem : MonoBehaviour {
         Camera.main.GetComponent<TopDownCamera>().target = tempPlayer;
 
         waveCoroutine = StartCoroutine(StartWave());
+        StartCoroutine(SpawnCollectible());
     }
 
     private IEnumerator StartWave() {
@@ -77,5 +82,17 @@ public class AISpawnSystem : MonoBehaviour {
             //Debug.Log(ai.name + " has spawned!");
             yield return new WaitForSeconds(spawn.interval);
         }
+    }
+
+    private IEnumerator SpawnCollectible() {
+        //Spawn Collectible
+        int roomNo = Random.Range(0, rooms.Length);
+        while (rooms[roomNo].SpawnPoints.Length == 0) {
+            roomNo = Random.Range(0, rooms.Length);
+        }
+        Vector3 randomPos = rooms[roomNo].SpawnPoints[Random.Range(0, rooms[roomNo].SpawnPoints.Length)];
+        Instantiate(collectibles[Random.Range(0, collectibles.Length)], randomPos, Quaternion.identity);
+        yield return new WaitForSeconds(collectibleInterval);
+        StartCoroutine(SpawnCollectible());
     }
 }

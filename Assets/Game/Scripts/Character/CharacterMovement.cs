@@ -55,6 +55,13 @@ public class CharacterMovement : MonoBehaviour, IDamageable {
         velocity = Vector3.zero;
     }
 
+    public void AddHealth(float healAmount) {
+        health += healAmount;
+        if(health >= maxHealth) {
+            health = maxHealth;
+        }
+    }
+
     public void OnDamaged(float damage) {
         if (isDeath)
             return;
