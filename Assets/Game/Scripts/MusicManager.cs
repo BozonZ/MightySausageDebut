@@ -13,6 +13,8 @@ public class MusicManager : MonoBehaviour
             instance = this;
             source = GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
+            ButtonHandler.mm = this;
+            PlayMenuAudio();
         } else {
             Destroy(gameObject);
         }

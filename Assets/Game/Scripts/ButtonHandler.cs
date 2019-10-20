@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
+    public static MusicManager mm;
+
     public void StartButton()
     {
         StartCoroutine(StartButtonTimer());
@@ -17,11 +19,13 @@ public class ButtonHandler : MonoBehaviour
 
     public void BackButton()
     {
+        mm.PlayMenuAudio();
         SceneManager.LoadScene("Main Menu");
     }
 
     public void RestartButton()
     {
+        mm.PlayGameAudio();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -29,6 +33,7 @@ public class ButtonHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("Map");
+        mm.PlayGameAudio();
     }
 
     IEnumerator ExitButtonTimer()

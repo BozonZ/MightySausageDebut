@@ -72,7 +72,7 @@ public class CharacterAttack : MonoBehaviour {
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.layer.CompareLayer(attackMask)) {
             IDamageable iDamage = other.collider.GetComponent<IDamageable>();
-            audioSource.PlayOneShot(absorbAudios[Random.Range(0, absorbAudios.Length)], 0.5f);
+            audioSource.PlayOneShot(absorbAudios[Random.Range(0, absorbAudios.Length)]);
             iDamage?.OnDeath();
         }
     }

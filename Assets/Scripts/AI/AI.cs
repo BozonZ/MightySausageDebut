@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable CS0649
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -96,7 +97,7 @@ public class AI : MonoBehaviour, IDamageable {
                     lineRenderer.SetPosition(0, transform.position + attackOffset);
                     lineRenderer.SetPosition(1, hit.point);
                     if (!source.isPlaying) {
-                        source.PlayOneShot(attackAudios[UnityEngine.Random.Range(0, attackAudios.Length)], 0.5f);
+                        source.PlayOneShot(attackAudios[UnityEngine.Random.Range(0, attackAudios.Length)]);
                     }
                     if (attackCoroutine == null) {
                         attackCoroutine = StartCoroutine(AttackCoroutine(hit.collider));
