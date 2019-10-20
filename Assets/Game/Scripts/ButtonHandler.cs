@@ -17,12 +17,12 @@ public class ButtonHandler : MonoBehaviour
 
     public void BackButton()
     {
-        StartCoroutine(BackButtonTimer());
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void RestartButton()
     {
-        StartCoroutine(RestartButtonTimer());
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     IEnumerator StartButtonTimer()
@@ -35,17 +35,5 @@ public class ButtonHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         Application.Quit();
-    }
-
-    IEnumerator BackButtonTimer()
-    {
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("Main Menu");
-    }
-
-    IEnumerator RestartButtonTimer()
-    {
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
