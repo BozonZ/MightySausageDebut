@@ -28,7 +28,7 @@ public class CharacterMovement : MonoBehaviour {
         velocity.z = speed * Input.GetAxisRaw("Vertical");
         rb.velocity += velocity;
         rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
-        rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(rotation, Vector3.up), turnRate * Time.deltaTime);
+        rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(rotation, Vector3.up), turnRate);
         rotation = velocity.magnitude > 0.01f || velocity.magnitude < -0.01f ? velocity : rotation;
         velocity = Vector3.zero;
     }
