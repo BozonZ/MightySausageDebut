@@ -10,6 +10,7 @@ public class CharacterMovement : MonoBehaviour {
     private Vector3 velocity;
     private Vector3 rotation;
     private Rigidbody rb;
+    public float health = 100;
 
     private void Awake()
     {
@@ -19,6 +20,9 @@ public class CharacterMovement : MonoBehaviour {
     private void FixedUpdate()
     {
         Move();
+        Health();
+
+        Mathf.Clamp(health, -5, 100);
     }
 
     private void Move()
@@ -31,5 +35,26 @@ public class CharacterMovement : MonoBehaviour {
         rb.rotation = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(rotation, Vector3.up), turnRate);
         rotation = velocity.magnitude > 0.01f || velocity.magnitude < -0.01f ? velocity : rotation;
         velocity = Vector3.zero;
+    }
+
+    public void Health()
+    {
+        if(health < 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Water")
+        {
+            health -= 5;
+        }
+
+        if (collision.transform.tag == "Health")
+        {
+            health += 25;
+        }
     }
 }
