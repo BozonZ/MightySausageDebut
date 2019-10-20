@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class TopDownCamera : MonoBehaviour
 {
-    GameObject target;
+    public Transform target;
     public float height = 10;
     public float distance = 10;
     public float angle = 0;
 
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player");
         HandleCamera();
     }
 
@@ -29,7 +28,7 @@ public class TopDownCamera : MonoBehaviour
 
             Vector3 rotatedVector = Quaternion.AngleAxis(angle, Vector3.up) * worldPos;
 
-            Vector3 flatTargetPos = target.transform.position;
+            Vector3 flatTargetPos = target.position;
             flatTargetPos.y = 0;
 
             Vector3 finalPos = flatTargetPos + rotatedVector;
