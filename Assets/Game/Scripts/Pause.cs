@@ -9,11 +9,7 @@ public class Pause : MonoBehaviour
 
     void Start()
     {
-        pauseMenu.SetActive(false);
-        isActive = false;
-        Time.timeScale = 1;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        StartCoroutine(Close());
     }
 
     void Update()
@@ -37,5 +33,14 @@ public class Pause : MonoBehaviour
                 Cursor.visible = false;
             }
         }
+    }
+    public IEnumerator Close()
+    {
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 1;
+        isActive = false;
+        pauseMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
