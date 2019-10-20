@@ -15,6 +15,7 @@ public class AISpawnSystem : MonoBehaviour {
     private void Start() {
         if (aiPoolSystem == null)
             aiPoolSystem = GetComponent<AIPoolSystem>();
+
         StartLevel();
     }
 
@@ -25,7 +26,11 @@ public class AISpawnSystem : MonoBehaviour {
         while (rooms[roomNo].SpawnPoints.Length == 0) {
             roomNo = Random.Range(0, rooms.Length);
         }
-        levelData.SetTarget(Instantiate(player, rooms[roomNo].SpawnPoints[Random.Range(0, rooms[roomNo].SpawnPoints.Length)], Quaternion.identity).transform);
+        Transform tempPlayer = Instantiate(player, rooms[roomNo].SpawnPoints[Random.Range(0, rooms[roomNo].SpawnPoints.Length)], Quaternion.identity).transform;
+        //Set level target for AIs
+        levelData.SetTarget(tempPlayer);
+        //Set camera target
+        Camera.main.GetComponent<TopDownCamera>().target = tempPlayer;
 
         waveCoroutine = StartCoroutine(StartWave());
     }

@@ -6,8 +6,8 @@ public class TopDownCamera : MonoBehaviour
 {
     GameObject target;
     public float height = 10;
-    public float distance = 20;
-    public float angle = 45;
+    public float distance = 10;
+    public float angle = 0;
 
     void Start()
     {
@@ -15,11 +15,10 @@ public class TopDownCamera : MonoBehaviour
         HandleCamera();
     }
 
-    
     void Update()
     {
         HandleCamera();
-        OrbitCamera();
+        //OrbitCamera();
     }
 
     public void HandleCamera()

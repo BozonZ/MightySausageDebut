@@ -9,11 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1916955348152483882}
-  - component: {fileID: 1461584403088122650}
   - component: {fileID: 8247097550195995465}
   - component: {fileID: 9141070610844861276}
   - component: {fileID: 972413858782800790}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: env_wall_doorway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,22 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &1461584403088122650
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3224926305723937337}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.42700002, y: 1.5000001, z: 2}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: -0.15, y: 1.5000001, z: -2}
-  m_TimeToStationary: 0.5
 --- !u!95 &8247097550195995465
 Animator:
   serializedVersion: 3
@@ -84,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d330ee7727e8a4c9e102b69f199b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLocked: 0
 --- !u!65 &972413858782800790
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -109,7 +93,7 @@ GameObject:
   - component: {fileID: 3153474347308720513}
   - component: {fileID: 3419202686455353592}
   - component: {fileID: 8460485505386262840}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: env_wall_doorway_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +186,7 @@ GameObject:
   - component: {fileID: 3596538338895681891}
   - component: {fileID: 7217126688455590363}
   - component: {fileID: 5635360204100510427}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: env_wall_doorway_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +279,7 @@ GameObject:
   - component: {fileID: 509032582349943403}
   - component: {fileID: 244856966110868570}
   - component: {fileID: 96543190791050734}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: env_wall_doorway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
