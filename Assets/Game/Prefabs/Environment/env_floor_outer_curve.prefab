@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3543176772496676075}
   - component: {fileID: 5508151106965565149}
   - component: {fileID: 2255295525669605924}
-  - component: {fileID: 6095732181267130607}
-  m_Layer: 0
+  - component: {fileID: 3295899701525476005}
+  m_Layer: 11
   m_Name: env_floor_outer_curve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &6095732181267130607
+--- !u!64 &3295899701525476005
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

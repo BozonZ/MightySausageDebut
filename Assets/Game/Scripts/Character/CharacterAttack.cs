@@ -10,6 +10,7 @@ public class CharacterAttack : MonoBehaviour {
     [SerializeField] private float attackRange;
     [SerializeField] private float attackCD;
     [SerializeField] private LayerMask attackMask;
+    [SerializeField] private LayerMask blockingMask;
     [SerializeField] private AudioClip laserAudio;
     [SerializeField] private AudioClip[] absorbAudios;
     [SerializeField] private LineRenderer lineRenderer;
@@ -28,7 +29,6 @@ public class CharacterAttack : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space) && attackCoroutine == null) {
             audioSource.PlayOneShot(laserAudio);
-            StartCoroutine(AttackRenderer(transform.position + laserOffset, (transform.position + laserOffset) + (transform.forward * attackRange)));
             attackCoroutine = StartCoroutine(TimedAttack());
         }
     }
@@ -41,23 +41,31 @@ public class CharacterAttack : MonoBehaviour {
 
     private void Attack() {
         RaycastHit sight;
-        if (!Physics.Raycast(transform.position + laserOffset, transform.forward, out sight, attackRange, ~attackMask)) {
-            RaycastHit[] hits;
-            hits = Physics.BoxCastAll(transform.position + laserOffset, laserSize / 2, transform.forward, Quaternion.identity, attackRange, attackMask);
-            if(hits.Length != 0) {
-                animator.SetTrigger("Attack");
+        Physics.BoxCast(transform.position + laserOffset, laserSize / 2, transform.forward, out sight, Quaternion.identity, attackRange, blockingMask, QueryTriggerInteraction.Ignore);
+        if (sight.collider != null) {
+            if (sight.collider.gameObject.layer.CompareLayer(attackMask)) {
+                StartCoroutine(AttackRenderer(transform.position + laserOffset, (transform.position + laserOffset) + (transform.forward * attackRange)));
+                RaycastHit[] hits;
+                hits = Physics.BoxCastAll(transform.position + laserOffset, laserSize / 2, transform.forward, Quaternion.identity, attackRange, attackMask);
+                foreach (RaycastHit hit in hits) {
+                    Debug.Log(hit.collider.name);
+                }
+                if (hits.Length != 0) {
+                    animator.SetTrigger("Attack");
+                    foreach (RaycastHit hit in hits) {
+                        IDamageable iDamage = hit.collider.GetComponent<IDamageable>();
+                        iDamage?.OnDeath();
+                    }
+                }
+            } else {
+                StartCoroutine(AttackRenderer(transform.position + laserOffset, sight.point));
+                Debug.Log($"Blocked by {sight.collider.name}");
             }
-            foreach (RaycastHit hit in hits) {
-                IDamageable iDamage = hit.collider.GetComponent<IDamageable>();
-                iDamage?.OnDeath();
-            }
-        } else {
-            StartCoroutine(AttackRenderer(transform.position + laserOffset, sight.point));
         }
     }
 
     private IEnumerator AttackRenderer(Vector3 startPos, Vector3 endPos) {
-        foreach(ParticleSystem particle in laserParticles) {
+        foreach (ParticleSystem particle in laserParticles) {
             particle.gameObject.SetActive(true);
         }
         lineRenderer.enabled = true;
@@ -84,6 +92,8 @@ public class CharacterAttack : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        Gizmos.DrawWireCube(transform.position + laserOffset, laserSize);
+        Gizmos.color = Color.magenta;
+        Gizmos.matrix = Matrix4x4.TRS(transform.position + laserOffset + (transform.forward * (attackRange / 2)), transform.rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, laserSize + (transform.forward * attackRange));
     }
 }

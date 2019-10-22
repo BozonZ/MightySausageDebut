@@ -9618,6 +9618,9 @@ MonoBehaviour:
   attackMask:
     serializedVersion: 2
     m_Bits: 512
+  blockingMask:
+    serializedVersion: 2
+    m_Bits: 768
   laserAudio: {fileID: 8300000, guid: 657ffe3886ba38e43a9e1cb6ea02c5c7, type: 3}
   absorbAudios:
   - {fileID: 8300000, guid: 8fcb969fbc98c3443ad8efec7384a11f, type: 3}
@@ -9843,11 +9846,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3899811799351463914}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 78711db13fdd5e248ba2c624f5b17ee0,
-        type: 3}
-      propertyPath: m_Name
-      value: char_blob
-      objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: 78711db13fdd5e248ba2c624f5b17ee0,
         type: 3}
       propertyPath: m_Controller
@@ -9857,6 +9855,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 78711db13fdd5e248ba2c624f5b17ee0,
+        type: 3}
+      propertyPath: m_Name
+      value: char_blob
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 78711db13fdd5e248ba2c624f5b17ee0,
         type: 3}
@@ -9944,11 +9947,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3899811799351463914}
     m_Modifications:
-    - target: {fileID: 4122301504096244846, guid: 626e750163c223545a99d185f6508c64,
-        type: 3}
-      propertyPath: m_Name
-      value: vfx_Character_Trail
-      objectReference: {fileID: 0}
     - target: {fileID: 4122301504096244841, guid: 626e750163c223545a99d185f6508c64,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10003,6 +10001,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122301504096244846, guid: 626e750163c223545a99d185f6508c64,
+        type: 3}
+      propertyPath: m_Name
+      value: vfx_Character_Trail
       objectReference: {fileID: 0}
     - target: {fileID: 4122301505246984204, guid: 626e750163c223545a99d185f6508c64,
         type: 3}

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_LWRP_Particles
+  m_Name: Shader Graphs_LWRP_FireAlarm
   m_Shader: {fileID: -6465566751694194690, guid: 0d0b7e4731296744ca234ed18c215241,
     type: 3}
   m_ShaderKeywords: 

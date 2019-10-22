@@ -878,7 +878,7 @@ MonoBehaviour:
   target: {fileID: 0}
   height: 10
   distance: 5
-  angle: 45
+  angle: 0
 --- !u!82 &963194230
 AudioSource:
   m_ObjectHideFlags: 0

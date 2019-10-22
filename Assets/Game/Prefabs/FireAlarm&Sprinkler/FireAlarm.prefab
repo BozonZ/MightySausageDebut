@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 3, y: 1, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2762855558036891300
 MonoBehaviour:
@@ -58,8 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed95961eae10de4ea685507e159a8f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   timeToTrigger: 2
-  timeTillDisable: 3
+  timeTillDisable: 10
   sensorAudio: {fileID: 8300000, guid: 88a4496d8629e9540b83cb8de55e8fe5, type: 3}
   alarmAudio: {fileID: 8300000, guid: ee09b64fff382bf48a4a6836a617162b, type: 3}
 --- !u!82 &6094051517764873277
