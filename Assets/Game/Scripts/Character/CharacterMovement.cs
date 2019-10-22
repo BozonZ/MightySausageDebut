@@ -102,14 +102,14 @@ public class CharacterMovement : MonoBehaviour, IDamageable
         isDeath = true;
         animator.SetBool("Death", true);
         StartCoroutine(Dead());
+        pauseMenu.SetActive(true);
     }
 
     public IEnumerator Dead()
     {
         yield return new WaitForSeconds(5);
-        pauseMenu.SetActive(true);
         Destroy(gameObject);
-        Time.timeScale = 1;
+        Time.timeScale = 0;
     }
     
 }

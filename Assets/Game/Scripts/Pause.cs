@@ -10,6 +10,7 @@ public class Pause : MonoBehaviour
     void Start()
     {
         StartCoroutine(Close());
+        pauseMenu.SetActive(true);
     }
 
     void Update()
